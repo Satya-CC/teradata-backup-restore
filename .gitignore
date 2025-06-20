@@ -1,0 +1,23 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+*.pyd
+old_versions/
+*.log
+.env
+.DS_Store
+venv/
+
+# Virtual environments
+.venv/
+env/
+
+# VS Code settings
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs and temp
+*.log
+*.tmp
