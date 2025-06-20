@@ -3,10 +3,13 @@
 *.pyo
 *.pyd
 old_versions/
+old_codes/
 *.log
 .env
 .DS_Store
 venv/
+.pyi
+old_codes
 
 # Virtual environments
 .venv/
