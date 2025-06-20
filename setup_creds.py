@@ -1,7 +1,7 @@
 import keyring
 import getpass
 
-SERVICE_NAME = "TeradataUploader"
+SERVICE_NAME = "Teradata_Backup_Engine"
 
 def setup():
     username = input("Enter your Teradata username: ")

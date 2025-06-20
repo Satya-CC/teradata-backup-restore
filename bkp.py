@@ -1,22 +1,30 @@
-print('4')
+
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 from decimal import Decimal
 import numpy as np
+import os
 from td_connection import get_connection
 
+downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
+database_name = input("Enter database name: ").strip()
+table_name = input("Enter table name: ").strip()
+start_week = input("Enter start Tesco week (e.g. 202001): ").strip()
+end_week = input("Enter end Tesco week (e.g. 202054): ").strip()
 
-database_name = 'DXWI_PROD_MGA_PLAY_PEN'
-table_name = 'DONOT_DELETE_uk_food_supplier_calc_audit_NO24_BACKUP'
-start_week = '202001'
-end_week = '202054'
+# database_name = 'DXWI_PROD_MGA_PLAY_PEN'
+# table_name = 'DONOT_DELETE_uk_food_supplier_calc_audit_NO24_BACKUP'
+# start_week = '202001'
+# end_week =  '202001'
+backup_file_name = f"{table_name}_{start_week}_{end_week}.parquet"
+
 sql_query = f"""
 SELECT * 
 FROM {database_name}.{table_name}
 WHERE "Tesco Week" BETWEEN {start_week} AND {end_week} 
 """
-output_file = r"C:\Users\IN45880649\OneDrive - Tesco\Desktop\DONOT_DELETE_uk_food_supplier_calc_audit_NO24_BACKUP_202101_202113.parquet"
+output_file = os.path.join(downloads_folder, backup_file_name)
 
 # --- Connect ---
 conn = get_connection()
@@ -35,6 +43,8 @@ WHERE databasename = '{database_name}'
 ORDER BY ColumnId
 """
 df_meta = pd.read_sql(query_meta, conn)
+
+print(f"Taking Backup from week '{start_week}' to {end_week} of table {table_name}")
 
 # Step 2: Build PyArrow schema from Teradata types
 def teradata_to_pyarrow(row):
